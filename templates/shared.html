@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>카카오 공유</title>
+  <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
+</head>
+<body>
+  <h1>카카오 공유 테스트</h1>
+  <button id="kakaotalk-share-btn">카카오톡으로 공유하기</button>
+
+  <script>
+    Kakao.init('{{ app_key }}');
+    console.log("Kakao SDK Initialized:", Kakao.isInitialized());
+    Kakao.Share.createDefaultButton({
+      container: '#kakaotalk-share-btn',
+      objectType: 'list',
+      headerTitle: '오늘의 추천 뉴스',
+      headerLink: {
+        mobileWebUrl: 'https://www.ibabynews.com',
+        webUrl: 'https://www.ibabynews.com',
+      },
+      contents: [
+        {% if contents and contents|length > 0 %}
+        {
+          title: {{ contents[0].title|tojson }},
+          description: {{ contents[0].description|tojson }},
+          imageUrl: {{ contents[0].imageUrl|tojson }},
+          link: {{ contents[0].link|tojson }},
+        },
+        {% endif %}
+        {% if contents and contents|length > 1 %}
+        {
+          title: {{ contents[1].title|tojson }},
+          description: {{ contents[1].description|tojson }},
+          imageUrl: {{ contents[1].imageUrl|tojson }},
+          link: {{ contents[1].link|tojson }},
+        },
+        {% endif %}
+        {% if contents and contents|length > 2 %}
+        {
+          title: {{ contents[2].title|tojson }},
+          description: {{ contents[2].description|tojson }},
+          imageUrl: {{ contents[2].imageUrl|tojson }},
+          link: {{ contents[2].link|tojson }},
+        },
+        {% endif %}
+      ],
+      buttons: [
+        {
+          title: '베이비뉴스 바로가기',
+          link: {
+            mobileWebUrl: 'https://www.ibabynews.com',
+            webUrl: 'https://www.ibabynews.com',
+          },
+        },
+      ],
+    });
+  </script>
+</body>
+</html>

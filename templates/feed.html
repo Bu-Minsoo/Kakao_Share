@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>카카오 공유</title>
+  <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
+</head>
+<body>
+  <h1>카카오 공유 테스트</h1>
+  <button id="kakaotalk-share-btn">카카오톡으로 공유하기</button>
+
+  <script>
+    Kakao.init('{{ app_key }}'); // 이 부분이 핵심!
+    Kakao.Share.createDefaultButton({
+      container: '#kakaotalk-share-btn',
+      objectType: 'feed',
+      content: {
+        title: '',
+        description: '',
+        imageUrl:
+          'https://mud-kage.kakao.com/dn/NTmhS/btqfEUdFAUf/FjKzkZsnoeE4o19klTOVI1/openlink_640x640s.jpg',
+        link: {
+          mobileWebUrl: 'https://developers.kakao.com',
+          webUrl: 'https://developers.kakao.com',
+        },
+      },
+      itemContent: {
+        profileText: 'KakaoKakaoKakaoKakaoKakaoKakaoKakaoKakaoKakaoKakaoKakaoKakaoKakaoKakaoKakaoKakaoKakaoKakaoKakaoKakaoKakaoKakaoKakaoKakaoKakaoKakaoKakaoKakaoKakaoKakaoKakaoKakaoKakaoKakaoKakaoKakaoKakaoKakaoKakaoKakaoKakaoKakaoKakaoKakaoKakaoKakaoKakaoKakaoKakaoKakaoKakaoKakaoKakaoKakaoKakaoKakaoKakaoKakaoKakaoKakaoKakaoKakaoKakaoKakaoKakaoKakaoKakaoKakaoKakao',
+        titleImageText: 'Cheese cakeCheese cakeCheese cakeCheese cakeCheese cakeCheese cakeCheese cakeCheese cakeCheese cakeCheese cakeCheese cakeCheese cakeCheese cakeCheese cakeCheese cakeCheese cakeCheese cakeCheese cakeCheese cakeCheese cakeCheese cakeCheese cakeCheese cakeCheese cakeCheese cakeCheese cakeCheese cakeCheese cakeCheese cakeCheese cakeCheese cakeCheese cakeCheese cakeCheese cakeCheese cakeCheese cakeCheese cakeCheese cakeCheese cakeCheese cakeCheese cakeCheese cakeCheese cake',
+      },
+      buttons: [
+        {
+          title: '웹으로 이동',
+          link: {
+            mobileWebUrl: 'https://developers.kakao.com',
+            webUrl: 'https://developers.kakao.com',
+          },
+        },
+        {
+          title: '앱으로 이동',
+          link: {
+            mobileWebUrl: 'https://developers.kakao.com',
+            webUrl: 'https://developers.kakao.com',
+          },
+        },
+      ],
+    });
+  </script>
+</body>
+</html>

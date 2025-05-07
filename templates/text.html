@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>카카오 공유</title>
+  <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
+</head>
+<body>
+  <h1>카카오 공유 테스트</h1>
+  <button id="kakaotalk-share-btn">카카오톡으로 공유하기</button>
+
+  <script>
+    Kakao.init('{{ app_key }}'); // 이 부분이 핵심!
+    Kakao.Share.createDefaultButton({
+      container: '#kakaotalk-share-btn',
+      objectType: 'text',
+      text: "["+'{{ title }}'+"]" + "\n\n" + '{{ body }}',
+      link: {
+        // mobileWebUrl: '{{ link }}',
+        // webUrl: '{{ link }}',
+        mobileWebUrl: "https://redirect-proxy.illusionists1004.workers.dev?url=" + '{{ link }}',
+        webUrl: "https://redirect-proxy.illusionists1004.workers.dev?url=" + '{{ link }}',
+      },
+    });
+
+  </script>
+</body>
+</html>
