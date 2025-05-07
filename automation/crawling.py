@@ -116,7 +116,7 @@ def crawl_lists():
 
     a_tag_list = [li.find("a", href=True)["href"] for li in lists if li.find("a", href=True)]
 
-    body_link_list = [[body_lists[i].text[:250], a_tag_list[i]] for i in range(len(lists))]
+    body_link_list = [[body_lists[i].text[:250], a_tag_list[i]] for i in range(25)]
     print(body_link_list)
 
     # with open('output.csv', mode='w', newline='', encoding='utf-8') as file:
