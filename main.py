@@ -4,7 +4,7 @@ import time
 
 if __name__ == '__main__':
     print("프로그램을 실행합니다")
-    start_server()
+    # start_server()
     print("작업을 수행합니다")
     start_task()
 
