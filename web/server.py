@@ -14,7 +14,9 @@ def start_server():
     flask_thread.start()
 
 def run_flask():
-    app.run(debug=True, port=9005, use_reloader=False)
+    port = os.getenv('PORT', 9004)
+    # app.run(debug=True, port=9005, use_reloader=False)
+    app.run(debug=True, host='0.0.0.0', port=port, use_reloader=False)
 
 # @app.route('/')
 # def share():
