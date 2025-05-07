@@ -92,7 +92,7 @@ def check_login_done():
         driver.find_element(By.XPATH, "/html/body/div/div/div[2]/div[2]/div[2]/div")
         return True
     except Exception as e:
-        print(e)
+        print("로그인 인증이 아직 완료되지 않았습니다.")
         return False
 
 def ready_chatroom():
