@@ -69,25 +69,24 @@ def run_flask():
 def share():
     if flask.request.method == "HEAD":
         return "", 200  # 헬스 체크용 빈 응답
-    # raw_body = cr.news_list['title'] + "\n" + cr.news_list['body']
-    # body = raw_body.replace('"', '').replace("'", "")
-    # raw_body = "test"
 
-    title = cr.news_list['title'].strip().replace('"', '').replace("'", "")
-    body = cr.news_list['body'].strip().replace('"', '').replace("'", "")
+    if not hasattr(cr, 'news_list') or not isinstance(cr.news_list, dict):
+        return "데이터가 아직 준비되지 않았습니다", 503  # Service Unavailable
 
-    # formatted_link = "https://localhost:9005/proxy?target=" + cr.news_list['link'].replace('https', 'http')
-    # formatted_link = cr.news_list['link'].replace('https', 'http')
-    link = cr.news_list['link']
-    print("link = " + link)
+    try:
+        title = cr.news_list['title'].strip().replace('"', '').replace("'", "")
+        body = cr.news_list['body'].strip().replace('"', '').replace("'", "")
+        link = cr.news_list['link']
+    except KeyError:
+        return "뉴스 데이터에 필요한 키가 없습니다", 503
 
-    # original_link = cr.news_list['link']
+    return render_template('text.html', app_key='c03ce9560aa54cba52b9fc2c4db6b3aa',
+                           title=title, body=body, link=link)
 
-    # 🔧 여기서 링크를 인코딩해서 프록시 주소로 변환
-    # encoded_link = urllib.parse.quote(original_link, safe='')
-    # link = f'https://proxy.liyao.space/{encoded_link}'
-    # print("encoded_link = ", encoded_link)
-    # print("link = ", link)
+    # title = cr.news_list['title'].strip().replace('"', '').replace("'", "")
+    # body = cr.news_list['body'].strip().replace('"', '').replace("'", "")
+    # link = cr.news_list['link']
+    # print("link = " + link)
 
     return render_template('text.html', app_key='c03ce9560aa54cba52b9fc2c4db6b3aa',
                            title=title, body=body, link=link)
