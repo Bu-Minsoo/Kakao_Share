@@ -11,7 +11,6 @@ from automation import crawling
 from apscheduler.schedulers.background import BackgroundScheduler
 from web import server
 
-PORT = "9005"
 if_login_success = False
 is_chrome_init = False
 is_server_init = False
@@ -42,9 +41,9 @@ def set_task():
 
     # 크롤링 시작 & news_list(crawling.py)에 저장
     crawling.crawl_lists()
-    if is_server_init is False:
-        server.start_server()
-        is_server_init = True
+    # if is_server_init is False:
+    #     server.start_server()
+    #     is_server_init = True
     enter_url()
 
     # 로그인 화면이 뜨는지 확인
@@ -75,7 +74,8 @@ def enter_url():
     #     driver.init_chrome()
     #     wx.CallAfter(log.append_log, "크롬 초기화 완료")
     #     is_chrome_init = True
-    driver.get_url("http://localhost:" + PORT)
+    url = os.getenv("APP_BASE_URL", "http://localhost:9005")
+    driver.get_url(url)
     time.sleep(2)
     driver.click_share_button()
     time.sleep(2)
