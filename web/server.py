@@ -83,7 +83,7 @@ def share():
         body = cr.news_list['body'].strip().replace('"', '').replace("'", "")
         link = cr.news_list['link']
     except KeyError:
-        return "뉴스 데이터에 필요한 키가 없습니다", 504
+        return "뉴스 데이터에 필요한 키가 없습니다", 505
 
     return render_template('text.html', app_key='c03ce9560aa54cba52b9fc2c4db6b3aa',
                            title=title, body=body, link=link)
