@@ -101,59 +101,44 @@ def start_crawling():
 # 네이버 뉴스 크롤링 (링크만 가져와서 건네주기)
 def crawl_lists():
     print("Start crawling lists...")
-    global BASE_URL, is_chrome_init
-    news_list.clear()
-    if is_chrome_init is False:
-        driver.init_chrome()
-        is_chrome_init = True
-    driver.get_url(BASE_URL)
+    try:
+        global BASE_URL, is_chrome_init
+        news_list.clear()
+        if is_chrome_init is False:
+            driver.init_chrome()
+            is_chrome_init = True
+        driver.get_url(BASE_URL)
 
-    time.sleep(2)
+        time.sleep(2)
 
-    soup = bs(driver.get_pagesource(), 'lxml')
+        soup = bs(driver.get_pagesource(), 'lxml')
 
-    lists = soup.find_all("li", class_=lambda x: x and 'NewsItem_news_item__' in x)
-    body_lists = soup.find_all("p", class_=lambda x: x and 'NewsItem_description__' in x)
+        lists = soup.find_all("li", class_=lambda x: x and 'NewsItem_news_item__' in x)
+        body_lists = soup.find_all("p", class_=lambda x: x and 'NewsItem_description__' in x)
 
-    a_tag_list = [li.find("a", href=True)["href"] for li in lists if li.find("a", href=True)]
+        a_tag_list = [li.find("a", href=True)["href"] for li in lists if li.find("a", href=True)]
+        body_link_list = [[body_lists[i].text[:250], a_tag_list[i]] for i in range(25)]
 
-    body_link_list = [[body_lists[i].text[:250], a_tag_list[i]] for i in range(25)]
-    # print(body_link_list)
+        if a_tag_list:
+            print(len(a_tag_list))
+            news_list['link'] =gpt.get_related_url(body_link_list)
 
-    # with open('output.csv', mode='w', newline='', encoding='utf-8') as file:
-    #     writer = csv.writer(file)
-    #
-    #     # 헤더 (선택 사항)
-    #     writer.writerow(['Column1', 'Column2'])
-    #
-    #     # 배열의 각 행을 CSV에 작성
-    #     for row in csv_file_list:
-    #         writer.writerow(row)
+            time.sleep(3)
 
+            # gpt 확인 후 다음 해제
+            driver.get_url(news_list['link'])
+            body = driver.get_body()
 
+            # title, body = gemini.get_title_body(body)
+            title, body = gpt.get_title_body(body)
+            news_list['title'] = title
+            news_list['body'] = body
 
-    # gemini.init_gemini()
-    # news_list['link'] = gemini.get_related_url(a_tag_list)
-
-    if a_tag_list:
-        print(len(a_tag_list))
-        news_list['link'] =gpt.get_related_url(body_link_list)
-
-
-        time.sleep(3)
-
-        # gpt 확인 후 다음 해제
-        driver.get_url(news_list['link'])
-        body = driver.get_body()
-
-        # title, body = gemini.get_title_body(body)
-        title, body = gpt.get_title_body(body)
-        news_list['title'] = title
-        news_list['body'] = body
-
-    print(f"a_tag_list 길이: {len(a_tag_list)}")
-    print(f"선택된 링크: {news_list.get('link')}")
-    print(f"생성된 타이틀: {news_list.get('title')}")
+        print(f"a_tag_list 길이: {len(a_tag_list)}")
+        print(f"선택된 링크: {news_list.get('link')}")
+        print(f"생성된 타이틀: {news_list.get('title')}")
+    except Exception as e:
+        print(f"[ERROR] 크롤링 중 예외 발생: {e}")
 
     #     for i in range(3):
     #         article_info = {}

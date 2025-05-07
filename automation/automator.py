@@ -17,15 +17,14 @@ is_chrome_init = False
 # is_server_init = False
 
 def start_task():
-    def run_task():
-        set_task()  # 여기에 작업 내용을 직접 넣으면 됩니다
+    # def run_task():
+    #     set_task()  # 여기에 작업 내용을 직접 넣으면 됩니다
 
-    # 앱 시작 시 1회 실행
-    run_task()
+    set_task()
 
     # 이후 4시간마다 실행
     scheduler = BackgroundScheduler()
-    scheduler.add_job(run_task, 'interval', minutes=2)
+    scheduler.add_job(set_task, 'interval', minutes=2)
     scheduler.start()
     # def run_task():
     #     set_task()
