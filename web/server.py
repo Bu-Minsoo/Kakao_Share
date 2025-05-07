@@ -65,6 +65,10 @@ def run_flask():
 # def share():
 #     return render_template('feed.html', app_key='c03ce9560aa54cba52b9fc2c4db6b3aa')
 
+@app.route('/healthz')
+def health_check():
+    return "OK", 200
+
 @app.route('/', methods=["GET", "HEAD"])
 def share():
     print("method = " + flask.request.method)
