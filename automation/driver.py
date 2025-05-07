@@ -93,6 +93,7 @@ def check_login_done():
         return True
     except:
         print("로그인 인증이 아직 완료되지 않았습니다.")
+        time.sleep(2)
         return False
 
 def ready_chatroom():
