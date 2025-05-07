@@ -1,4 +1,5 @@
 import os
+import threading
 
 from flask.cli import load_dotenv
 
@@ -9,38 +10,31 @@ from automation.driver import check_login_needed
 from automation import crawling
 from apscheduler.schedulers.background import BackgroundScheduler
 
+from web import server
+
 if_login_success = False
 is_chrome_init = False
 is_server_init = False
 
 def start_task():
+
+    def run_task():
+        set_task()
+
+    task_thread = threading.Thread(target=run_task, daemon=False)
+    task_thread.start()
+
     scheduler = BackgroundScheduler()
-
-    set_task()
-
-    scheduler.add_job(set_task, 'interval', hours=4)
-
+    scheduler.add_job(
+        lambda: threading.Thread(target=run_task, daemon=False).start(),
+        'interval',
+        hours=4
+    )
     scheduler.start()
 
-    #
-    #
-    # def run_task():
-    #     set_task()
-    #
-    # task_thread = threading.Thread(target=run_task, daemon=False)
-    # task_thread.start()
-    #
-    # scheduler = BackgroundScheduler()
-    # scheduler.add_job(
-    #     lambda: threading.Thread(target=run_task, daemon=False).start(),
-    #     'interval',
-    #     hours=4
-    # )
-    # scheduler.start()
-
-    # task_thread = threading.Thread(target=set_task, args=(on_done_callback, on_done_login, on_complete_login, on_done_crawl))
-    # task_thread.daemon = True  # 프로그램 종료 시 서버도 종료되도록 설정
-    # task_thread.start()
+    task_thread = threading.Thread(target=set_task)
+    task_thread.daemon = True  # 프로그램 종료 시 서버도 종료되도록 설정
+    task_thread.start()
 
 def set_task():
     global if_login_success, is_server_init
@@ -48,9 +42,9 @@ def set_task():
 
     # 크롤링 시작 & news_list(crawling.py)에 저장
     crawling.crawl_lists()
-    # if is_server_init is False:
-    #     server.run_flask()
-    #     is_server_init = True
+    if is_server_init is False:
+        server.start_server()
+        is_server_init = True
     enter_url()
 
     # 로그인 화면이 뜨는지 확인
