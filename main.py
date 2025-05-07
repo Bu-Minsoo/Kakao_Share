@@ -25,7 +25,7 @@ def share():
 if __name__ == '__main__':
     print("프로그램을 실행합니다")
     port = int(os.environ.get("PORT", 10000))
-    app.run(host='0.0.0.0', port=port)
+    app.run(host='0.0.0.0', port=port, debug=False)
     print("작업을 수행합니다")
     start_task()
 
