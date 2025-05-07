@@ -52,14 +52,15 @@ def get_related_url(body_urls):
 
     # content = response.choices[0].message.content.replace("'", "")
     content = response.choices[0].message.content
-    print(content)
+    # print(content)
     return content
 
 
 def get_title_body(body):
-    print("=============body===========")
-    print(body)
-    print("============================")
+    print("GPT로부터 응답을 받아옵니다.")
+    # print("=============body===========")
+    # print(body)
+    # print("============================")
     prompt = f"""
         여기 뉴스 기사가 있어.
 
@@ -88,11 +89,11 @@ def get_title_body(body):
     )
 
     content = response.choices[0].message.content
-    print(content)
+    # print(content)
     result = content.split("[!@#$%]")
-    print(result)
+    # print(result)
     title = result[0].strip()
     body = result[1].strip()
-    print(title)
-    print(body)
+    # print(title)
+    # print(body)
     return title, body

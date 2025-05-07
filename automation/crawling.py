@@ -100,6 +100,7 @@ def start_crawling():
 
 # 네이버 뉴스 크롤링 (링크만 가져와서 건네주기)
 def crawl_lists():
+    print("Start crawling lists...")
     global BASE_URL, is_chrome_init
     news_list.clear()
     if is_chrome_init is False:
@@ -117,7 +118,7 @@ def crawl_lists():
     a_tag_list = [li.find("a", href=True)["href"] for li in lists if li.find("a", href=True)]
 
     body_link_list = [[body_lists[i].text[:250], a_tag_list[i]] for i in range(25)]
-    print(body_link_list)
+    # print(body_link_list)
 
     # with open('output.csv', mode='w', newline='', encoding='utf-8') as file:
     #     writer = csv.writer(file)

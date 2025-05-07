@@ -14,7 +14,7 @@ from web import server
 
 if_login_success = False
 is_chrome_init = False
-is_server_init = False
+# is_server_init = False
 
 def start_task():
 
@@ -32,9 +32,9 @@ def start_task():
     )
     scheduler.start()
 
-    task_thread = threading.Thread(target=set_task)
-    task_thread.daemon = True  # 프로그램 종료 시 서버도 종료되도록 설정
-    task_thread.start()
+    # task_thread = threading.Thread(target=set_task)
+    # task_thread.daemon = True  # 프로그램 종료 시 서버도 종료되도록 설정
+    # task_thread.start()
 
 def set_task():
     global if_login_success, is_server_init
@@ -42,9 +42,9 @@ def set_task():
 
     # 크롤링 시작 & news_list(crawling.py)에 저장
     crawling.crawl_lists()
-    if is_server_init is False:
-        server.start_server()
-        is_server_init = True
+    # if is_server_init is False:
+    #     server.start_server()
+    #     is_server_init = True
     enter_url()
 
     # 로그인 화면이 뜨는지 확인
@@ -52,8 +52,7 @@ def set_task():
         driver.execute_login(os.getenv("ID"), os.getenv("PW"))
         # driver.execute_login(data[0], data[1])
 
-        # 못 찾을 경우 1초마다 확인
-        index = 1
+        # 못 찾을 경우 2초마다 확인
         while True:
             time.sleep(2)
             if driver.check_login_done():

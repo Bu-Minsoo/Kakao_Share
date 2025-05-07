@@ -37,7 +37,7 @@ def init_chrome():
 
 def get_url(url):
     global driver
-    print("url = " + url)
+    # print("url = " + url)
     driver.get(url)
     time.sleep(1)
 
@@ -91,7 +91,7 @@ def check_login_done():
     try:
         driver.find_element(By.XPATH, "/html/body/div/div/div[2]/div[2]/div[2]/div")
         return True
-    except Exception as e:
+    except:
         print("로그인 인증이 아직 완료되지 않았습니다.")
         return False
 
