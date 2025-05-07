@@ -1,6 +1,7 @@
 from flask import Flask, render_template
 import threading, os
 from automation import crawling as cr
+import flask
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))  # Kakao_Share/
 TEMPLATE_DIR = os.path.join(BASE_DIR, 'templates')  # Kakao_Share/templates
@@ -14,10 +15,9 @@ def start_server():
     flask_thread.start()
 
 def run_flask():
-    port = int(os.getenv('PORT', 9004))
     # app.run(debug=True, port=9005, use_reloader=False)
     # app.run(debug=True, host='0.0.0.0', port=port, use_reloader=False)
-    app.run(host="0.0.0.0", port=int(os.environ.get("PORT")))
+    app.run(host="0.0.0.0", port=int(os.environ.get("PORT", 9005)))
 
 # @app.route('/')
 # def share():
@@ -65,8 +65,10 @@ def run_flask():
 # def share():
 #     return render_template('feed.html', app_key='c03ce9560aa54cba52b9fc2c4db6b3aa')
 
-@app.route('/')
+@app.route('/', methods=["GET", "HEAD"])
 def share():
+    if flask.request.method == "HEAD":
+        return "", 200  # 헬스 체크용 빈 응답
     # raw_body = cr.news_list['title'] + "\n" + cr.news_list['body']
     # body = raw_body.replace('"', '').replace("'", "")
     # raw_body = "test"
