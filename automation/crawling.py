@@ -149,6 +149,10 @@ def crawl_lists():
         news_list['title'] = title
         news_list['body'] = body
 
+    print(f"a_tag_list 길이: {len(a_tag_list)}")
+    print(f"선택된 링크: {news_list.get('link')}")
+    print(f"생성된 타이틀: {news_list.get('title')}")
+
     #     for i in range(3):
     #         article_info = {}
     #
