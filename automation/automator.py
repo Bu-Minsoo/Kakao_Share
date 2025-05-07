@@ -41,9 +41,9 @@ def set_task():
 
     # 크롤링 시작 & news_list(crawling.py)에 저장
     crawling.crawl_lists()
-    # if is_server_init is False:
-    #     server.start_server()
-    #     is_server_init = True
+    if is_server_init is False:
+        server.run_flask()
+        is_server_init = True
     enter_url()
 
     # 로그인 화면이 뜨는지 확인
