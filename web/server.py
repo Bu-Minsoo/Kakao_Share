@@ -67,6 +67,7 @@ def run_flask():
 
 @app.route('/', methods=["GET", "HEAD"])
 def share():
+    print("method = " + flask.request.method)
     if flask.request.method == "HEAD":
         return "", 200  # 헬스 체크용 빈 응답
 
