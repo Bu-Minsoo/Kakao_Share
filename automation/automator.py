@@ -17,24 +17,31 @@ is_chrome_init = False
 # is_server_init = False
 
 def start_task():
-
     def run_task():
-        set_task()
+        set_task()  # 여기에 작업 내용을 직접 넣으면 됩니다
 
-    task_thread = threading.Thread(target=run_task, daemon=False)
-    task_thread.start()
+    # 앱 시작 시 1회 실행
+    run_task()
 
+    # 이후 4시간마다 실행
     scheduler = BackgroundScheduler()
-    scheduler.add_job(
-        lambda: threading.Thread(target=run_task, daemon=False).start(),
-        'interval',
-        hours=4
-    )
+    scheduler.add_job(run_task, 'interval', minutes=2)
     scheduler.start()
-
-    # task_thread = threading.Thread(target=set_task)
-    # task_thread.daemon = True  # 프로그램 종료 시 서버도 종료되도록 설정
+    # def run_task():
+    #     set_task()
+    #
+    # task_thread = threading.Thread(target=run_task, daemon=False)
     # task_thread.start()
+    #
+    # scheduler = BackgroundScheduler()
+    # scheduler.add_job(
+    #     lambda: threading.Thread(target=run_task, daemon=False).start(),
+    #     'interval',
+    #     hours=4
+    # )
+    # scheduler.start()
+
+
 
 def set_task():
     global if_login_success, is_server_init

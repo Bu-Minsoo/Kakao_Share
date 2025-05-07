@@ -8,10 +8,10 @@ TEMPLATE_DIR = os.path.join(BASE_DIR, 'templates')  # Kakao_Share/templates
 
 app = Flask(__name__, template_folder=TEMPLATE_DIR)
 
-def start_server():
-    flask_thread = threading.Thread(target=run_flask)
-    flask_thread.daemon = True  # 프로그램 종료 시 서버도 종료되도록 설정
-    flask_thread.start()
+# def start_server():
+#     flask_thread = threading.Thread(target=run_flask)
+#     flask_thread.daemon = True  # 프로그램 종료 시 서버도 종료되도록 설정
+#     flask_thread.start()
 
 def run_flask():
     print("서버를 실행합니다...")
@@ -93,5 +93,5 @@ def share():
     # link = cr.news_list['link']
     # print("link = " + link)
 
-    return render_template('text.html', app_key='c03ce9560aa54cba52b9fc2c4db6b3aa',
-                           title=title, body=body, link=link)
+    # return render_template('text.html', app_key='c03ce9560aa54cba52b9fc2c4db6b3aa',
+    #                        title=title, body=body, link=link)
