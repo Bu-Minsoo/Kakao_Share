@@ -87,6 +87,11 @@ def share():
     print("method = " + flask.request.method)
     if flask.request.method == "HEAD":
         return "", 200  # 헬스 체크용 빈 응답
+
+    if flask.request.method == "GET":
+        return "", 200
+
+    return "this endpoint is not used directly", 200
     #
     # if not hasattr(cr, 'news_list') or not isinstance(cr.news_list, dict):
     #     return "데이터가 아직 준비되지 않았습니다", 504  # Service Unavailable
