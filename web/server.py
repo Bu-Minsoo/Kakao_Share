@@ -69,6 +69,19 @@ def run_flask():
 def health_check():
     return "OK", 200
 
+@app.route('/run')
+def run():
+    if not cr.news_list or 'title' not in cr.news_list:
+        return "데이터 준비 중입니다", 200
+
+    title = cr.news_list['title'].strip().replace('"', '').replace("'", "")
+    body = cr.news_list['body'].strip().replace('"', '').replace("'", "")
+    link = cr.news_list['link']
+
+    return render_template('text.html', app_key='c03ce9560aa54cba52b9fc2c4db6b3aa',
+                           title=title, body=body, link=link)
+
+
 @app.route('/', methods=["GET", "HEAD"])
 def share():
     print("method = " + flask.request.method)
@@ -84,15 +97,15 @@ def share():
     #     link = cr.news_list['link']
     # except KeyError:
     #     return "뉴스 데이터에 필요한 키가 없습니다", 505
-    if not cr.news_list or 'title' not in cr.news_list:
-        return "데이터 준비 중입니다", 200
-
-    title = cr.news_list['title'].strip().replace('"', '').replace("'", "")
-    body = cr.news_list['body'].strip().replace('"', '').replace("'", "")
-    link = cr.news_list['link']
-
-    return render_template('text.html', app_key='c03ce9560aa54cba52b9fc2c4db6b3aa',
-                           title=title, body=body, link=link)
+    # if not cr.news_list or 'title' not in cr.news_list:
+    #     return "데이터 준비 중입니다", 200
+    #
+    # title = cr.news_list['title'].strip().replace('"', '').replace("'", "")
+    # body = cr.news_list['body'].strip().replace('"', '').replace("'", "")
+    # link = cr.news_list['link']
+    #
+    # return render_template('text.html', app_key='c03ce9560aa54cba52b9fc2c4db6b3aa',
+    #                        title=title, body=body, link=link)
 
     # title = cr.news_list['title'].strip().replace('"', '').replace("'", "")
     # body = cr.news_list['body'].strip().replace('"', '').replace("'", "")

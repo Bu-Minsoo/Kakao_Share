@@ -81,6 +81,7 @@ def enter_url():
     #     wx.CallAfter(log.append_log, "크롬 초기화 완료")
     #     is_chrome_init = True
     url = os.getenv("APP_BASE_URL", "http://localhost:9005")
+    url = url + "/run"
     driver.get_url(url)
     time.sleep(2)
     driver.click_share_button()
