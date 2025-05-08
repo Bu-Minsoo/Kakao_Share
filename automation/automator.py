@@ -20,25 +20,25 @@ def start_task():
     # def run_task():
     #     set_task()  # 여기에 작업 내용을 직접 넣으면 됩니다
 
-    set_task()
-
-    # 이후 4시간마다 실행
-    scheduler = BackgroundScheduler()
-    scheduler.add_job(set_task, 'interval', minutes=2)
-    scheduler.start()
+    # set_task()
+    #
+    # # 이후 4시간마다 실행
+    # scheduler = BackgroundScheduler()
+    # scheduler.add_job(set_task, 'interval', minutes=2)
+    # scheduler.start()
     # def run_task():
     #     set_task()
-    #
-    # task_thread = threading.Thread(target=run_task, daemon=False)
-    # task_thread.start()
-    #
-    # scheduler = BackgroundScheduler()
-    # scheduler.add_job(
-    #     lambda: threading.Thread(target=run_task, daemon=False).start(),
-    #     'interval',
-    #     hours=4
-    # )
-    # scheduler.start()
+
+    task_thread = threading.Thread(target=set_task, daemon=False)
+    task_thread.start()
+
+    scheduler = BackgroundScheduler()
+    scheduler.add_job(
+        lambda: threading.Thread(target=set_task, daemon=False).start(),
+        'interval',
+        hours=4
+    )
+    scheduler.start()
 
 
 
