@@ -43,40 +43,40 @@ def start_task():
 
 
 def set_task():
-    global if_login_success, is_server_init
-    print("크롤링을 시작합니다.")
-    crawling.crawl_lists()
-    print("크롤링을 완료했습니다.\n카카오톡 공유를 시작합니다.")
-    # if is_server_init is False:
-    #     server.start_server()
-    #     is_server_init = True
-    enter_url()
+    global if_login_success
+    try:
+        print("크롤링을 시작합니다.")
+        crawling.crawl_lists()
+        print("크롤링을 완료했습니다.\n카카오톡 공유를 시작합니다.")
+        enter_url()
 
-    # 로그인 화면이 뜨는지 확인
-    if check_login_needed():
-        print("로그인 인증이 필요합니다.")
-        driver.execute_login(os.getenv("ID"), os.getenv("PW"))
-        # driver.execute_login(data[0], data[1])
+        # 로그인 화면이 뜨는지 확인
+        if check_login_needed():
+            print("로그인 인증이 필요합니다.")
+            driver.execute_login(os.getenv("ID"), os.getenv("PW"))
+            # driver.execute_login(data[0], data[1])
 
-        # 못 찾을 경우 2초마다 확인
-        while True:
-            time.sleep(2)
-            if driver.check_login_done():
-                break
-        # 이렇게 해도 되나?
-        # while driver.check_login_done() is False:
-        #     time.sleep(2)
+            # 못 찾을 경우 2초마다 확인
+            while True:
+                time.sleep(2)
+                if driver.check_login_done():
+                    break
+            # 이렇게 해도 되나?
+            # while driver.check_login_done() is False:
+            #     time.sleep(2)
 
-    # 로그인 후 버튼 비활성화
-    driver.ready_chatroom()
-    if driver.is_chatroom_exist(os.getenv("ROOM")):
-        print("채팅방을 선택합니다 : " + os.getenv("ROOM"))
-        driver.click_chatroom()
-        driver.click_share()
-        print("메세지 공유를 완료하였습니다.")
-        driver.close_popup()
-        print("팝업창을 종료합니다.")
-        driver.deactivate_popup()
+        # 로그인 후 버튼 비활성화
+        driver.ready_chatroom()
+        if driver.is_chatroom_exist(os.getenv("ROOM")):
+            print("채팅방을 선택합니다 : " + os.getenv("ROOM"))
+            driver.click_chatroom()
+            driver.click_share()
+            print("메세지 공유를 완료하였습니다.")
+            driver.close_popup()
+            print("팝업창을 종료합니다.")
+            driver.deactivate_popup()
+    except Exception as e:
+        print(f"[set_task ERROR] {e}")
 
 def enter_url():
     # global is_chrome_init
@@ -95,10 +95,10 @@ def enter_url():
     # 팝업창 전환 후 로그인
     driver.activate_popup()
 
-    # 이건 메인문에서 실행
-    # driver.execute_login()
+# 이건 메인문에서 실행
+# driver.execute_login()
 
-    # 작업 수행 버튼 다시 활성화 하고, 로그인 인증 진행
+# 작업 수행 버튼 다시 활성화 하고, 로그인 인증 진행
 
 # 로그인 했을 시 보여야 하는 요소가 뜨는지 확인
 
