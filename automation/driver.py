@@ -67,8 +67,10 @@ def activate_popup():
 def check_login_needed():
     try:
         driver.find_element(By.XPATH, "/html/body/div/div/div/main/article/div/div/form/div[1]/div/input")
+        print("Login needed")
         return True
     except:
+        print("Please Login")
         return False
 
 def execute_login(id, pw):
