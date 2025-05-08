@@ -100,7 +100,6 @@ def start_crawling():
 
 # 네이버 뉴스 크롤링 (링크만 가져와서 건네주기)
 def crawl_lists():
-    print("Start crawling lists...")
     try:
         global BASE_URL, is_chrome_init
         news_list.clear()
@@ -115,12 +114,12 @@ def crawl_lists():
 
         lists = soup.find_all("li", class_=lambda x: x and 'NewsItem_news_item__' in x)
         body_lists = soup.find_all("p", class_=lambda x: x and 'NewsItem_description__' in x)
-
         a_tag_list = [li.find("a", href=True)["href"] for li in lists if li.find("a", href=True)]
         body_link_list = [[body_lists[i].text[:250], a_tag_list[i]] for i in range(25)]
 
         if a_tag_list:
             print(len(a_tag_list))
+            print("GPT와 작업을 시도합니다.")
             news_list['link'] =gpt.get_related_url(body_link_list)
 
             time.sleep(3)

@@ -67,6 +67,7 @@ def run_flask():
 
 @app.route('/healthz')
 def health_check():
+    print("헬스 체크를 중...")
     return "OK", 200
 
 @app.route('/run')

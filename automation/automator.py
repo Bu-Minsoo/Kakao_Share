@@ -44,10 +44,9 @@ def start_task():
 
 def set_task():
     global if_login_success, is_server_init
-    load_dotenv()
-
-    # 크롤링 시작 & news_list(crawling.py)에 저장
+    print("크롤링을 시작합니다.")
     crawling.crawl_lists()
+    print("크롤링을 완료했습니다.\n카카오톡 공유를 시작합니다.")
     # if is_server_init is False:
     #     server.start_server()
     #     is_server_init = True
@@ -55,6 +54,7 @@ def set_task():
 
     # 로그인 화면이 뜨는지 확인
     if check_login_needed():
+        print("로그인 인증이 필요합니다.")
         driver.execute_login(os.getenv("ID"), os.getenv("PW"))
         # driver.execute_login(data[0], data[1])
 
@@ -63,13 +63,19 @@ def set_task():
             time.sleep(2)
             if driver.check_login_done():
                 break
+        # 이렇게 해도 되나?
+        # while driver.check_login_done() is False:
+        #     time.sleep(2)
 
     # 로그인 후 버튼 비활성화
     driver.ready_chatroom()
     if driver.is_chatroom_exist(os.getenv("ROOM")):
+        print("채팅방을 선택합니다 : " + os.getenv("ROOM"))
         driver.click_chatroom()
         driver.click_share()
+        print("메세지 공유를 완료하였습니다.")
         driver.close_popup()
+        print("팝업창을 종료합니다.")
         driver.deactivate_popup()
 
 def enter_url():
@@ -80,8 +86,7 @@ def enter_url():
     #     driver.init_chrome()
     #     wx.CallAfter(log.append_log, "크롬 초기화 완료")
     #     is_chrome_init = True
-    url = os.getenv("APP_BASE_URL", "http://localhost:9005")
-    url = url + "/run"
+    url = os.getenv("APP_BASE_URL", "http://localhost:9005") + "/run"
     driver.get_url(url)
     time.sleep(2)
     driver.click_share_button()
